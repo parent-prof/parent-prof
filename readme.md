@@ -8,7 +8,7 @@
 - Executer la commande ``php bin/console doctrine:database:create`` afin de créer la base de données
 
 #### Etape 2:
-- Mettez à jours le schema de la base de données avec la commande ``php bin/console doctrine:database:migrate``
+- Mettez à jours le schema de la base de données avec la commande ``php bin/console doctrine:migrations:migrate``
 
 #### Etape 3:
 - Executez le projet avec les commandes: ``symfony server:start`` ou ``php -S localhost:8000 -t public`` 
