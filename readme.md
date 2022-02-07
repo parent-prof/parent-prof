@@ -16,4 +16,4 @@
 
 #### Outils
 Pas necessaire pour executer le projet, mais utilse pour tester le dévéloppement de l'API et autres:
-- Postman ``https://dl.pstmn.io/download/latest/win64``
+- Postman https://dl.pstmn.io/download/latest/win64
