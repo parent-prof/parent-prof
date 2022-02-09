@@ -17,12 +17,17 @@ class LoginController extends AbstractController
     {
         $username = $request->request->get("username");
         $password = $request->request->get("password");
+        if ($username ==="prof"){
+            $msg = "prof";
+        }else{
+            $msg = "parent";
+        }
 
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Access-Control-Allow-Origin', '*');
 
-        $response->setContent(json_encode("$username + ' ' + $password"));
+        $response->setContent(json_encode($msg));
 
         return $response;
     }
