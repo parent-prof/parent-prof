@@ -12,7 +12,7 @@
 
 #### Etape 3:
 - Executez le projet avec les commandes: ``symfony server:start`` ou ``php -S localhost:8000 -t public`` 
-- Synchronisez le front end avec la commande :``npm run dev server``
+- Synchronisez le front end avec la commande :``npm run dev-server``
 
 #### Outils
 Pas necessaire pour executer le projet, mais utilse pour tester le dévéloppement de l'API et autres:
