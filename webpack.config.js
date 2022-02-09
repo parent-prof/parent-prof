@@ -63,7 +63,18 @@ Encore
 
     // uncomment if you use React
     .enableReactPreset()
-
+    .addLoader({
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        loader: 'image-webpack-loader',
+        options: {
+            bypassOnDebug: true, //only minify during production
+            plugins: [
+                {removeTitle: true},
+                {convertColors: {shorthex: false}},
+                {convertPathData: false}
+            ]
+        },
+    })
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())
