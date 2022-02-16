@@ -35,34 +35,25 @@ class AuthUtilisateurAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): Passport
     {
 
-        $email = $request->query->get('email', '');
+        $email = $request->request->get('email', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
             new UserBadge($email),
-            new PasswordCredentials(md5($request->query->get('password', '')))
+            new PasswordCredentials(md5($request->request->get('password', '')))
         );
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        /**
-         * @var $user Utilisateur
-         */
         $user = $this->security->getUser();
-        $response = new Response();
-        $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $utilisateur = array(
-            "nom"=> $user->getNom(),
-            "premon"=> $user->getNom(),
-            "email"=> $user->getEmail(),
-            "roles"=> $user->getRoles(),
-            "username"=> $user->getUsername(),
-        );
-        $response->setContent(json_encode($utilisateur));
-        return $response;
+        if (in_array("ROLE_PROF",$user->getRoles())){
+            return new RedirectResponse($this->urlGenerator->generate('prof_accueil'));
+        }
+        else if (in_array("ROLE_PARENT",$user->getRoles())){
+            return new RedirectResponse($this->urlGenerator->generate('parent_accueil'));
+        }
     }
 
     protected function getLoginUrl(Request $request): string
