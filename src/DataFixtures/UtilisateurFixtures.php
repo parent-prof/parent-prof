@@ -25,8 +25,6 @@ class UtilisateurFixtures extends Fixture
             $utilisateur->setMdp(md5($faker->randomElement(array ('prof1','parent1','parent2','prof2'),1)));
             $utilisateur->setRoles($faker->randomElements(array ('ROLE_ADMIN','ROLE_PROF','ROLE_PARENT'), 1));
             $manager->persist($utilisateur);
-<<<<<<< Updated upstream
-=======
 
             if (in_array("ROLE_PROF",$utilisateur->getRoles())){
                 $prof = new Professeur();
@@ -53,7 +51,7 @@ class UtilisateurFixtures extends Fixture
             $promotion->setNom($nom[$i]);
             $promotion->setProfesseur($faker->randomElement($professeur,1));
             $manager->persist($promotion);
->>>>>>> Stashed changes
+
         }
 
         $manager->flush();
