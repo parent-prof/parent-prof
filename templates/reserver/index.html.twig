@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reserver index{% endblock %}
+
+{% block body %}
+    <h1>Reserver index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>H_debut</th>
+                <th>H_fin</th>
+                <th>Confirmation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reserver in reservers %}
+            <tr>
+                <td>{{ reserver.id }}</td>
+                <td>{{ reserver.HDebut ? reserver.HDebut|date('H:i:s') : '' }}</td>
+                <td>{{ reserver.HFin ? reserver.HFin|date('H:i:s') : '' }}</td>
+                <td>{{ reserver.confirmation ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('reserver_show', {'id': reserver.id}) }}">show</a>
+                    <a href="{{ path('reserver_edit', {'id': reserver.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('reserver_new') }}">Create new</a>
+{% endblock %}
