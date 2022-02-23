@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use App\Entity\Utilisateur;
 use App\Entity\Professeur;
-use App\Entity\Parents;
 use App\Entity\Promotion;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -25,8 +24,6 @@ class UtilisateurFixtures extends Fixture
             $utilisateur->setMdp(md5($faker->randomElement(array ('prof1','parent1','parent2','prof2'),1)));
             $utilisateur->setRoles($faker->randomElements(array ('ROLE_ADMIN','ROLE_PROF','ROLE_PARENT'), 1));
             $manager->persist($utilisateur);
-<<<<<<< Updated upstream
-=======
 
             if (in_array("ROLE_PROF",$utilisateur->getRoles())){
                 $prof = new Professeur();
@@ -35,9 +32,12 @@ class UtilisateurFixtures extends Fixture
                 array_push($this->professeur,$prof);
             }
             if (in_array("ROLE_PARENT",$utilisateur->getRoles())){
-                $parent = new Parents();
+                
+                
+               /* $parent = new Parent();
                 $parent->setUser($utilisateur);
                 $manager->persist($parent);
+                */
             }
 
         }
@@ -53,7 +53,6 @@ class UtilisateurFixtures extends Fixture
             $promotion->setNom($nom[$i]);
             $promotion->setProfesseur($faker->randomElement($professeur,1));
             $manager->persist($promotion);
->>>>>>> Stashed changes
         }
 
         $manager->flush();

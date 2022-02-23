@@ -30,9 +30,16 @@ class Professeur
      */
     private $promotions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Disponibilite::class, mappedBy="professeur")
+     */
+    private $disponibilites;
+
+
     public function __construct()
     {
         $this->promotions = new ArrayCollection();
+        $this->disponibilites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,4 +88,35 @@ class Professeur
 
         return $this;
     }
+
+    /**
+     * @return Collection|Disponibilite[]
+     */
+    public function getDisponibilites(): Collection
+    {
+        return $this->disponibilites;
+    }
+
+    public function addDisponibilite(Disponibilite $disponibilite): self
+    {
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites[] = $disponibilite;
+            $disponibilite->setProfesseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilite $disponibilite): self
+    {
+        if ($this->disponibilites->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getProfesseur() === $this) {
+                $disponibilite->setProfesseur(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
