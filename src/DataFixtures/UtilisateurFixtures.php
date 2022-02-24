@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Parents;
 use App\Entity\Utilisateur;
 
 
 use App\Entity\Professeur;
-use App\Entity\Parents;
 use App\Entity\Promotion;
 use App\Entity\Eleve;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -24,7 +24,7 @@ class UtilisateurFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $utilisateur = new Utilisateur();
             $utilisateur->setEmail($faker->email);
             $utilisateur->setNom($faker->lastName);
@@ -32,7 +32,6 @@ class UtilisateurFixtures extends Fixture
             $utilisateur->setMdp(md5($faker->randomElement(array ('prof1','parent1','parent2','prof2'),1)));
             $utilisateur->setRoles($faker->randomElements(array ('ROLE_ADMIN','ROLE_PROF','ROLE_PARENT'), 1));
             $manager->persist($utilisateur);
-
 
             if (in_array("ROLE_PROF",$utilisateur->getRoles())){
                 $prof = new Professeur();
@@ -44,7 +43,9 @@ class UtilisateurFixtures extends Fixture
                 $parent = new Parents();
                 $parent->setUser($utilisateur);
                 $manager->persist($parent);
+
                 array_push($this->parents,$parent);
+
             }
 
         }
@@ -62,6 +63,7 @@ class UtilisateurFixtures extends Fixture
             $promotion->setNom($nom[$i]);
             $promotion->setProfesseur($faker->randomElement($professeur,1));
             $manager->persist($promotion);
+
             array_push($this->promotions, $promotion);
 
         }
@@ -72,7 +74,7 @@ class UtilisateurFixtures extends Fixture
     public function loadEleve(array $parents, array  $promotions, ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $eleve = new Eleve();
             $eleve->setMatricule($faker->iban(null,'',10));
             $eleve->setNom($faker->lastName);

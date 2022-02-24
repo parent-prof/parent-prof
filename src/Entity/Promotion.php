@@ -31,6 +31,11 @@ class Promotion
     private $professeur;
 
     /**
+     * @ORM\OneToMany(targetEntity=Disponibilite::class, mappedBy="promotion")
+     */
+    private $disponibilites;
+
+    /**
      * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="promotion")
      */
     private $eleves;
@@ -38,6 +43,7 @@ class Promotion
     public function __construct()
     {
         $this->eleves = new ArrayCollection();
+        $this->disponibilites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,4 +104,38 @@ class Promotion
 
         return $this;
     }
+    /**
+     * @return Collection|Disponibilite[]
+     */
+    public function getDisponibilites(): Collection
+    {
+        return $this->disponibilites;
+    }
+
+    public function addDisponibilite(Disponibilite $disponibilite): self
+    {
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites[] = $disponibilite;
+            $disponibilite->setPromotion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilite $disponibilite): self
+    {
+        if ($this->disponibilites->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getPromotion() === $this) {
+                $disponibilite->setPromotion(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return (string) $this->nom;
+    }
+
 }
