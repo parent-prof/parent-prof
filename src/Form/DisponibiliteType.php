@@ -5,13 +5,28 @@ namespace App\Form;
 use App\Entity\Disponibilite;
 use App\Entity\Professeur;
 
+use App\Entity\Promotion;
+use App\Entity\Utilisateur;
+use App\Repository\ProfesseurRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class DisponibiliteType extends AbstractType
 {
+
+    private Utilisateur $professeur;
+    private Security $security;
+    private ProfesseurRepository $professeurRepository;
+
+    public function __construct(Security $security, ProfesseurRepository $professeurRepository)
+    {
+        $this->security = $security;
+        $this->professeurRepository = $professeurRepository;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /**
@@ -23,6 +38,10 @@ class DisponibiliteType extends AbstractType
             ->add('date_dispo')
             ->add('heure_debut')
             ->add('duree')
+            ->add('promotion', EntityType::class,[
+                'class'=>Promotion::class,
+                'choices'=>$this->getPromotion()
+            ])
             
         ;
     }
@@ -32,5 +51,12 @@ class DisponibiliteType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Disponibilite::class,
         ]);
+    }
+    private function getPromotion(): array
+    {
+        $user = $this->security->getUser();
+        /** @var Professeur $prof */
+        $prof = $this->professeurRepository->findOneBy(array('user'=>$user));
+        return $prof->getPromotions()->toArray();
     }
 }
