@@ -12,13 +12,10 @@
 
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/components.css') }}">
-{#        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+        {% block stylesheets %}
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}#}
+
     </head>
     <body style="height: 100%; background-color: white">
     <div id="app">
@@ -47,4 +44,6 @@
 
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    {% block javascripts %}
+    {% endblock %}
 </html>

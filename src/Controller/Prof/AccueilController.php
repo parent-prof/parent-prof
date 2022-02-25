@@ -15,6 +15,7 @@ class AccueilController extends AbstractController
     {
         return $this->render('prof/accueil/index.html.twig', [
             'controller_name' => 'Prof',
+            'actionName' =>'Accueil'
         ]);
     }
 }

@@ -30,9 +30,15 @@ class Parents
      */
     private $eleves;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reserver::class, mappedBy="parent")
+     */
+    private $reservers;
+
     public function __construct()
     {
         $this->eleves = new ArrayCollection();
+        $this->reservers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +82,36 @@ class Parents
             // set the owning side to null (unless already changed)
             if ($elefe->getParents() === $this) {
                 $elefe->setParents(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reserver[]
+     */
+    public function getReservers(): Collection
+    {
+        return $this->reservers;
+    }
+
+    public function addReserver(Reserver $reserver): self
+    {
+        if (!$this->reservers->contains($reserver)) {
+            $this->reservers[] = $reserver;
+            $reserver->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReserver(Reserver $reserver): self
+    {
+        if ($this->reservers->removeElement($reserver)) {
+            // set the owning side to null (unless already changed)
+            if ($reserver->getParent() === $this) {
+                $reserver->setParent(null);
             }
         }
 

@@ -10,6 +10,8 @@ use App\Entity\Utilisateur;
 use App\Repository\ProfesseurRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
@@ -35,8 +37,10 @@ class DisponibiliteType extends AbstractType
         $prof = $options['data'];
         $builder
             ->add('heure_fin')
-            ->add('date_dispo')
-            ->add('heure_debut')
+            ->add('date_dispo', DateTimeType::class,[
+                'date_widget'=>'single_text'
+            ])
+            ->add('heure_debut', TimeType::class)
             ->add('duree')
             ->add('promotion', EntityType::class,[
                 'class'=>Promotion::class,

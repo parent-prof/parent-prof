@@ -27,6 +27,8 @@ class DisponibiliteController extends AbstractController
     {
         return $this->render('disponibilite/index.html.twig', [
             'disponibilites' => $disponibiliteRepository->findAll(),
+            'actionName' =>'Disponibilités'
+
         ]);
     }
 
@@ -78,6 +80,8 @@ class DisponibiliteController extends AbstractController
         return $this->renderForm('disponibilite/new.html.twig', [
             'disponibilite' => $disponibilite,
             'form' => $form,
+            'actionName' =>'Creer une disponibilité'
+
         ]);
     }
 

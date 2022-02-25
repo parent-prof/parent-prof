@@ -33,6 +33,7 @@ class PromotionController extends AbstractController
 
         return $this->render('prof/promotion/index.html.twig', [
             'promotions' => $prof->getPromotions(),
+            'actionName' =>'Promotions'
         ]);
     }
 

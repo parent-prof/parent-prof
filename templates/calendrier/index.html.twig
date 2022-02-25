@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CalendrierController!{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.5/dist/fullcalendar.min.css' rel='stylesheet' />
+
+    <style>
+        #calendrier{
+            width: 100%;
+            height: 100%;
+            margin: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>
+    <script>
+        window.onload = () => {
+            let calendarElt = document.querySelector("#calendrier")
+            let calendar = new FullCalendar.Calendar(calendarElt, {
+                themeSystem: 'bootstrap5',
+                locale: 'fr',
+                timeZone: 'Europe/Paris',
+                navLinks: true,
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                }
+            })
+            calendar.render()
+        }
+
+    </script>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-3">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h4>Reunions à venir</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="card card-primary">
+                <div class="card-body" id="calendrier">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

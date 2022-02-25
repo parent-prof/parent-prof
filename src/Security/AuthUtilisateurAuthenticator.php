@@ -49,6 +49,7 @@ class AuthUtilisateurAuthenticator extends AbstractLoginFormAuthenticator
     {
         $user = $this->security->getUser();
         if (in_array("ROLE_PROF",$user->getRoles())){
+
             return new RedirectResponse($this->urlGenerator->generate('prof_accueil'));
         }
         else if (in_array("ROLE_PARENT",$user->getRoles())){
