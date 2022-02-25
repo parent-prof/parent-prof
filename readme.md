@@ -23,8 +23,8 @@ Pas necessaire pour executer le projet, mais utilse pour tester le dévéloppeme
 - Effacer la base de données ``php bin/console doctrine:database:drop --force``
 - Effacer toutes les migrations (tous les fichier contenus dans le dossier migrations)
 - Recreer la base de données ``php bin/console doctrine:database:create``
-- Regenerer les migrations ```php bin/console make:migration``
-- Charger les migration dans la base de données ```php bin/console doctrine:migrations:migrate``
+- Regenerer les migrations ``php bin/console make:migration``
+- Charger les migration dans la base de données ``php bin/console doctrine:migrations:migrate``
 - Charger le jeux de fausses données ``php bin/console doctrine:fixtures:load``
 - Tester l'application ``symfony server:start``
 - 
