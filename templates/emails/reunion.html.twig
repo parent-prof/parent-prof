@@ -1,0 +1,29 @@
+{# templates/emails/signup.html.twig #}
+<!doctype html>
+<html lang="en">
+    <head><!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Bootstrap CSS -->
+        
+    </head>
+    <body>
+
+        <section class="mail-seccess section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3 col-12">
+                        <!-- Error Inner -->
+                        <div class="success-inner">
+                            <h1><i class="fa fa-envelope"></i><span>INVITATION A PARTICIPER A LA REUNION</span></h1>
+                            <p>Monsieur/Madame {{nomPa}} vous etes conviés à la réunion qui se tiendra le {{date}} à {{heure}} avec {{nomP}}</p>
+                            <p>Veuillez cliquer sur le lien ci-dessous pour participer à la réunion</p>
+                            <a href="{{lien}}" class="btn btn-primary btn-lg">participer à la réunion</a>
+                        </div>
+                        <!--/ End Error Inner -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </body>
+    </html>
