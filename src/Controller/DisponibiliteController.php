@@ -27,8 +27,7 @@ class DisponibiliteController extends AbstractController
     {
         return $this->render('disponibilite/index.html.twig', [
             'disponibilites' => $disponibiliteRepository->findAll(),
-            'actionName' =>'Disponibilités'
-
+            'actionName'=>"ffqf"
         ]);
     }
 
@@ -48,31 +47,17 @@ class DisponibiliteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $disponibilite->setProfesseur($prof);
             $entityManager->persist($disponibilite);
-            $entityManager->flush();
-            echo($disponibilite->getId());
-            echo("<br>");
-            echo($disponibilite->getHeureDebut()->format("H:i:s"));
-            echo("<br>");
-            echo($disponibilite->getHeureFin()->format("H:i:s"));
-            echo("<br>");
-           
-            $heureF=$disponibilite->getHeureFin();
 
-            $heurD = $disponibilite->getHeureDebut();
+            $listeCrenaux = $this->Fractionner1($disponibilite->getHeureDebut()->format("H:i:s"),$disponibilite->getHeureFin()->format("H:i:s"),$disponibilite->getDuree()->format("i"));
 
-            $dureetotal = $heureF->diff($heurD);
-            echo($dureetotal->format("%H:%i:%s"));
-        
-            $listeCrenaux = $this->Fractionner($heurD,$heureF,$disponibilite->getDuree());        
-          // creer une boucle 
-          for ($i=0; $i < sizeof($listeCrenaux) -1; $i++) { 
-              $creneau = new Creneau();
-              $creneau->setHeureDebut(new \DateTime($listeCrenaux[$i]));
-              $creneau->setHeureFin(new \DateTime($listeCrenaux[$i+1]));
-              $creneau->setOccupe(false);
-              $creneau->setDisponibilite($disponibilite);
-              $entityManager->persist($creneau);
-          }
+            for ($i=0; $i < sizeof($listeCrenaux) -1; $i++) {
+                $creneau = new Creneau();
+                $creneau->setHeureDebut(new \DateTime($listeCrenaux[$i]));
+                $creneau->setHeureFin(new \DateTime($listeCrenaux[$i+1]));
+                $creneau->setOccupe(false);
+                $creneau->setDisponibilite($disponibilite);
+                $entityManager->persist($creneau);
+            }
             $entityManager->flush();
             return $this->redirectToRoute('disponibilite_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -80,8 +65,7 @@ class DisponibiliteController extends AbstractController
         return $this->renderForm('disponibilite/new.html.twig', [
             'disponibilite' => $disponibilite,
             'form' => $form,
-            'actionName' =>'Creer une disponibilité'
-
+            'actionName'=>'Créer une disponibilité'
         ]);
     }
 
@@ -100,7 +84,7 @@ class DisponibiliteController extends AbstractController
      */
     public function edit(Request $request, Disponibilite $disponibilite, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Disponibilite1Type::class, $disponibilite);
+        $form = $this->createForm(DisponibiliteType::class, $disponibilite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -129,17 +113,33 @@ class DisponibiliteController extends AbstractController
     }
 
     //
-   public function  Fractionner(\DateTime $StartTime, \DateTime $EndTime, \DateTime $Duration): array{
-     
+    public function  Fractionner(\DateTime $StartTime, \DateTime $EndTime, \DateTime $Duration): array{
+
         $ReturnArray = array ();
         $AddMins  =$Duration->getTimestamp();
         $StartTime = $StartTime->getTimestamp();
         $EndTime = $EndTime->getTimestamp();
-        
+
         while ($StartTime <= $EndTime)
         {
             $ReturnArray[] = date ("G:i", $StartTime);
             $StartTime+= $AddMins;
+        }
+        dump($ReturnArray);
+        return $ReturnArray;
+    }
+    function Fractionner1($StartTime, $EndTime, $Duration="60"){
+
+        $ReturnArray = array ();
+        $StartTime    = strtotime ($StartTime); // Timestamp
+        $EndTime      = strtotime ($EndTime); // Timestamp
+
+        $AddMins  = $Duration * 60;
+
+        while ($StartTime <= $EndTime)
+        {
+            $ReturnArray[] = date ("G:i", $StartTime);
+            $StartTime += $AddMins;
         }
         return $ReturnArray;
     }
