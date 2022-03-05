@@ -31,7 +31,7 @@ class Professeur
     private $promotions;
 
     /**
-     * @ORM\OneToMany(targetEntity=Disponibilite::class, mappedBy="professeur")
+     * @ORM\OneToMany(targetEntity=Disponibilite::class, mappedBy="professeur" , fetch="EAGER")
      */
     private $disponibilites;
 

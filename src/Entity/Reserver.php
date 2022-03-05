@@ -23,16 +23,22 @@ class Reserver
     private $confirmation;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Creneau::class)
+     * @ORM\ManyToOne(targetEntity=Creneau::class,fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $creneau;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Parents::class, inversedBy="reservers")
+     * @ORM\ManyToOne(targetEntity=Parents::class, inversedBy="reservers",fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $parent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Eleve::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $eleve;
 
     public function getId(): ?int
     {
@@ -71,6 +77,18 @@ class Reserver
     public function setParent(?Parents $parent): self
     {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getEleve(): ?Eleve
+    {
+        return $this->eleve;
+    }
+
+    public function setEleve(?Eleve $eleve): self
+    {
+        $this->eleve = $eleve;
 
         return $this;
     }

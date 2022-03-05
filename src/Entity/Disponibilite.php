@@ -55,7 +55,7 @@ class Disponibilite
     private $promotion;
 
     /**
-     * @ORM\OneToMany(targetEntity=Creneau::class, mappedBy="disponibilite", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Creneau::class, mappedBy="disponibilite", orphanRemoval=true, fetch="EAGER")
      */
     private $creneaux;
 

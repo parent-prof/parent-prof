@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Creneau;
 use App\Entity\Reserver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,27 @@ class ReserverRepository extends ServiceEntityRepository
         parent::__construct($registry, Reserver::class);
     }
 
+    /**
+     * @param bool $status
+     * @param Creneau $crenaux[]
+     * @return Reserver[]
+     */
+    public function findMesReunions(bool $status, $crenaux)
+    {
+        /** @var Reserver $reunionsConfirme[] */
+        $reunions = array();
+        /** @var Creneau $crenau */
+
+
+        foreach ($crenaux as $crenau){
+            $reunion = $this->findOneBy(array('creneau'=>$crenau,'confirmation'=>$status));
+            if (!is_null($reunion)){
+                array_push($reunions, $reunion );
+
+            }
+        }
+        return $reunions;
+    }
     // /**
     //  * @return Reserver[] Returns an array of Reserver objects
     //  */
@@ -34,6 +56,7 @@ class ReserverRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
     */
 
     /*

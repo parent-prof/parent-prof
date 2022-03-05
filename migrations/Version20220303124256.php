@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220224080400 extends AbstractMigration
+final class Version20220303124256 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -26,6 +26,7 @@ final class Version20220224080400 extends AbstractMigration
         $this->addSql('CREATE TABLE parents (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, UNIQUE INDEX UNIQ_FD501D6AA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE professeur (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, UNIQUE INDEX UNIQ_17A55299A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE promotion (id INT AUTO_INCREMENT NOT NULL, professeur_id INT NOT NULL, nom VARCHAR(50) NOT NULL, INDEX IDX_C11D7DD1BAB22EE9 (professeur_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE reserver (id INT AUTO_INCREMENT NOT NULL, creneau_id INT NOT NULL, parent_id INT NOT NULL, eleve_id INT NOT NULL, confirmation TINYINT(1) NOT NULL, INDEX IDX_B9765E937D0729A9 (creneau_id), INDEX IDX_B9765E93727ACA70 (parent_id), INDEX IDX_B9765E93A6CC7B2 (eleve_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE utilisateur (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, nom VARCHAR(255) NOT NULL, prenom VARCHAR(255) NOT NULL, mdp VARCHAR(255) NOT NULL, roles JSON NOT NULL, UNIQUE INDEX UNIQ_1D1C63B3E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE creneau ADD CONSTRAINT FK_F9668B5F2B9D6493 FOREIGN KEY (disponibilite_id) REFERENCES disponibilite (id)');
         $this->addSql('ALTER TABLE disponibilite ADD CONSTRAINT FK_2CBACE2FBAB22EE9 FOREIGN KEY (professeur_id) REFERENCES professeur (id)');
@@ -35,13 +36,19 @@ final class Version20220224080400 extends AbstractMigration
         $this->addSql('ALTER TABLE parents ADD CONSTRAINT FK_FD501D6AA76ED395 FOREIGN KEY (user_id) REFERENCES utilisateur (id)');
         $this->addSql('ALTER TABLE professeur ADD CONSTRAINT FK_17A55299A76ED395 FOREIGN KEY (user_id) REFERENCES utilisateur (id)');
         $this->addSql('ALTER TABLE promotion ADD CONSTRAINT FK_C11D7DD1BAB22EE9 FOREIGN KEY (professeur_id) REFERENCES professeur (id)');
+        $this->addSql('ALTER TABLE reserver ADD CONSTRAINT FK_B9765E937D0729A9 FOREIGN KEY (creneau_id) REFERENCES creneau (id)');
+        $this->addSql('ALTER TABLE reserver ADD CONSTRAINT FK_B9765E93727ACA70 FOREIGN KEY (parent_id) REFERENCES parents (id)');
+        $this->addSql('ALTER TABLE reserver ADD CONSTRAINT FK_B9765E93A6CC7B2 FOREIGN KEY (eleve_id) REFERENCES eleve (id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE reserver DROP FOREIGN KEY FK_B9765E937D0729A9');
         $this->addSql('ALTER TABLE creneau DROP FOREIGN KEY FK_F9668B5F2B9D6493');
+        $this->addSql('ALTER TABLE reserver DROP FOREIGN KEY FK_B9765E93A6CC7B2');
         $this->addSql('ALTER TABLE eleve DROP FOREIGN KEY FK_ECA105F7B706B6D3');
+        $this->addSql('ALTER TABLE reserver DROP FOREIGN KEY FK_B9765E93727ACA70');
         $this->addSql('ALTER TABLE disponibilite DROP FOREIGN KEY FK_2CBACE2FBAB22EE9');
         $this->addSql('ALTER TABLE promotion DROP FOREIGN KEY FK_C11D7DD1BAB22EE9');
         $this->addSql('ALTER TABLE disponibilite DROP FOREIGN KEY FK_2CBACE2F139DF194');
@@ -54,6 +61,7 @@ final class Version20220224080400 extends AbstractMigration
         $this->addSql('DROP TABLE parents');
         $this->addSql('DROP TABLE professeur');
         $this->addSql('DROP TABLE promotion');
+        $this->addSql('DROP TABLE reserver');
         $this->addSql('DROP TABLE utilisateur');
     }
 }

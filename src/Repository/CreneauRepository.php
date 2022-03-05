@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Creneau;
+use App\Entity\Disponibilite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,47 @@ class CreneauRepository extends ServiceEntityRepository
         parent::__construct($registry, Creneau::class);
     }
 
+    /**
+     * @param Disponibilite $disponibilites[]
+     * @return Creneau|Creneau[]
+     */
+    public function findCrenauxByDisp($disponibilites)
+    {
+        /** @var Creneau $crenaux[] */
+        $crenaux = array();
+
+        /** @var Disponibilite $disponibilite */
+
+        foreach ($disponibilites as $disponibilite){
+            /** @var Creneau $creneau */
+
+            foreach ($disponibilite->getCreneaux() as $creneau){
+                if ($creneau->getOccupe() == true){
+                    array_push($crenaux,$creneau);
+                }
+            }
+        }
+        return $crenaux;
+
+    }
+
+    /**
+     * @param $status
+     * @param Disponibilite $disponibilite[]
+     * @return int|mixed|string
+     */
+    public function findCrenauxOccuped($status)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.occupe = :status')
+            ->setParameter('status', $status)
+            ->andWhere('c.disponibilite = :dispo')
+            ->setParameter('dispo', $disponibilite[0])
+            ->orderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Creneau[] Returns an array of Creneau objects
     //  */

@@ -7,9 +7,6 @@
 
 {% block body %}
     <div class="row">
-
-        <a href="http://127.0.0.1:3000" ><h4>En attentes</h4></a>
-
         <div class="col-sm-12">
             <!-- Nav tabs -->
              <div class=" card justify-content-center " style="margin-top: -25px; height: 120px" >
@@ -18,7 +15,14 @@
                         <a class="active" id="home-tab" data-toggle="tab" href="#home" ><h4>Mes Reunions</h4></a>
                     </li>
                     <li class="ml-3">
-                        <a  id="profile-tab" data-toggle="tab" href="#profile" ><h4>En attentes</h4></a>
+                        <a class="border_bottom" id="profile-tab" data-toggle="tab" href="#profile" >
+                            <h4>En attentes
+                                {% if reunionsNoConfirme |length >0 %}
+                                <span class="badge badge-success">
+                                    {{ reunionsNoConfirme|length }}
+                                </span>
+                                {% endif %}
+                                </h4></a>
                     </li>
                 </ul>
             </div>
@@ -26,21 +30,91 @@
             <!-- Tab panes -->
             <div class="tab-content clearfix">
                 <div class="tab-pane active" id="home">
+                    <h2 class="section-title">Mes reunions confirmées</h2>
+                    <p class="section-lead">
+                        Examples for badges, our small count and labeling component.
+                    </p>
                     <div class="row">
-                        <div class="col-sm-12">
-                            <div class=" ">
-                                <h1>texte</h1>
-                                <p>Mes reunions</p>
+                        {% for reserveConfime in reunionsConfirme %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card " style="border-top: 2px solid #1ABC9C;">
+                                <div class="card-header">
+                                    <h4 class="text-dark">{{ reserveConfime.eleve.nom ~ ' ' ~ reserveConfime.eleve.prenom }}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="text-dark bold">{{ reserveConfime.parent.user.nom ~ ' ' ~ reserveConfime.parent.user.prenom }}</h5>
+                                            <small>{{ reserveConfime.creneau.heuredebut | date('H:i')}} - {{ reserveConfime.creneau.heurefin | date('H:i')}}</small>
+                                        </div>
+                                        <div class="col text-center w-100">
+                                            <div>
+                                                <div class="">
+                                                    <img src="https://via.placeholder.com/66" class="im_g" alt="">
+                                                    <p class="text-right mr-3 text_t">{{ reserveConfime.eleve.promotion.nom}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="background-color: rgba(27,27,27,0.26); height: 1px; width: 100%"></div>
+                                    </div>
+                                    <a href="#" class="btn btn-outline-primari mt-2 w-100">Connecter </a>
+                                </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
+
                 <div class="tab-pane" id="profile">
+                    <p class="section-lead">
+                        Examples for badges, our small count and labeling component.
+                    </p>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="">
-                                <h1>textec</h1>
-                                <p>Mes reunions en attentes</p>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Reunions en attentes</h4>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <tbody><tr>
+                                                    <th>
+
+                                                    </th>
+                                                    <th>Nom du parent</th>
+                                                    <th>Eleves</th>
+                                                    <th>Classes</th>
+                                                    <th>Periodes</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                {% for reserveNonConfirme in reunionsNoConfirme %}
+                                                <tr>
+                                                    <td class="p-0 text-center">
+                                                        <div class="custom-checkbox custom-control">
+                                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ reserveNonConfirme.parent.user.nom ~ ' ' ~ reserveNonConfirme.parent.user.prenom }}</td>
+                                                    <td class="align-middle">
+                                                        {{ reserveNonConfirme.eleve.nom ~ ' ' ~ reserveNonConfirme.eleve.prenom }}
+                                                    </td>
+                                                    <td>
+                                                        {{ reserveNonConfirme.eleve.promotion.nom}}
+                                                    </td>
+                                                    <td><div class="text-primary mb-2">{{ reserveNonConfirme.creneau.disponibilite.datedispo | date('d/m/Y')}}</div></td>
+                                                    <td>
+                                                        <a href="{{ path('confirme_reservation', {'id': reserveNonConfirme.id}) }}" class="btn btn-outline-primary">Confirmer</a>
+                                                        <a href="#" class="btn btn-icon icon-left btn-danger"> Modifier</a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody></table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

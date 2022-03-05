@@ -20,13 +20,13 @@ class Parents
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"},fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="parents")
+     * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="parents",fetch="EAGER")
      */
     private $eleves;
 
