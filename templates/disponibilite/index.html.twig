@@ -3,39 +3,51 @@
 {% block title %}Disponibilite index{% endblock %}
 
 {% block body %}
-    <h1>Disponibilite index</h1>
+    <div class="section-body">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Heure_fin</th>
-                <th>Date_dispo</th>
-                <th>Heure_debut</th>
-                <th>Duree</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for disponibilite in disponibilites %}
-            <tr>
-                <td>{{ disponibilite.id }}</td>
-                <td>{{ disponibilite.heureFin ? disponibilite.heureFin|date('H:i:s') : '' }}</td>
-                <td>{{ disponibilite.dateDispo ? disponibilite.dateDispo|date('Y-m-d') : '' }}</td>
-                <td>{{ disponibilite.heureDebut ? disponibilite.heureDebut|date('H:i:s') : '' }}</td>
-                <td>{{ disponibilite.duree ? disponibilite.duree|date('H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('disponibilite_show', {'id': disponibilite.id}) }}">show</a>
-                    <a href="{{ path('disponibilite_edit', {'id': disponibilite.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Disponibilités ajoutés</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Période</th>
+                                <th scope="col">Classe</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for dispo in disponibilites %}
+                                <tr>
+                                    <th scope="col">{{ dispo.datedispo | date('d/m/Y') }}</th>
+                                    <th scope="col">{{ dispo.heuredebut | date('h:i') }} - {{ dispo.heurefin | date('h:i') }}</th>
+                                    <th scope="col">{{ dispo.promotion.nom }}</th>
+                                    <th scope="col">
+                                        <a href="#" class="btn btn-outline-danger mt-2 ">Annuler</a>
+                                        <a href="#" class="btn btn-outline-primari mt-2">Voir les crenaux </a>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Ajouter une Disponibilités</h4>
+                    </div>
+                    <div class="card-body">
 
-    <a href="{{ path('disponibilite_new') }}">Create new</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

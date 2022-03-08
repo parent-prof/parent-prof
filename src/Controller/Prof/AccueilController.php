@@ -29,7 +29,6 @@ class AccueilController extends AbstractController
 
         $reunionsConfirme = $reserverRepository->findMesReunions(true, $creneauRepository->findCrenauxByDisp($disponibilites));
         $reunionsNoConfirme = $reserverRepository->findMesReunions(false, $creneauRepository->findCrenauxByDisp($disponibilites));
-        dump($reunionsNoConfirme);
         return $this->render('prof/accueil/index.html.twig', [
             'controller_name' => 'Prof',
             'actionName' =>'Accueil',

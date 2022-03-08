@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Disponibilite;
+use App\Entity\Professeur;
 use App\Form\DisponibiliteType;
 use App\Repository\DisponibiliteRepository;
 use App\Repository\ProfesseurRepository;
@@ -23,11 +24,14 @@ class DisponibiliteController extends AbstractController
     /**
      * @Route("/", name="disponibilite_index", methods={"GET"})
      */
-    public function index(DisponibiliteRepository $disponibiliteRepository): Response
+    public function index(DisponibiliteRepository $disponibiliteRepository, ProfesseurRepository $professeurRepository): Response
     {
+        /** @var Professeur $prof */
+        $prof = $professeurRepository->findOneBy(array('user'=>$this->getUser()));
         return $this->render('disponibilite/index.html.twig', [
-            'disponibilites' => $disponibiliteRepository->findAll(),
-            'actionName'=>"ffqf"
+            'disponibilites' => $prof->getDisponibilites(),
+            'actionName'=>"Mes disponibilités"
+
         ]);
     }
 
