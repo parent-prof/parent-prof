@@ -40,6 +40,11 @@ class Reserver
      */
     private $eleve;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lienReunion;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +94,18 @@ class Reserver
     public function setEleve(?Eleve $eleve): self
     {
         $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    public function getLienReunion(): ?string
+    {
+        return $this->lienReunion;
+    }
+
+    public function setLienReunion(string $lienReunion): self
+    {
+        $this->lienReunion = $lienReunion;
 
         return $this;
     }
