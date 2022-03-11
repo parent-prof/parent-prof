@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=DisponibiliteRepository::class)
  * @UniqueEntity(
- *     fields={"promotion", "professeur" ,"date_dispo","heure_debut"},
+ *     fields={"professeur" ,"date_dispo","heure_debut"},
  *     message="This entity is already in use on that host."
  * )
  */

@@ -22,15 +22,47 @@ use Symfony\Component\Routing\Annotation\Route;
 class DisponibiliteController extends AbstractController
 {
     /**
-     * @Route("/", name="disponibilite_index", methods={"GET"})
+     * @Route("/", name="disponibilite_index",  methods={"GET", "POST"})
      */
-    public function index(DisponibiliteRepository $disponibiliteRepository, ProfesseurRepository $professeurRepository): Response
+    public function index(Request $request,EntityManagerInterface $entityManager, ProfesseurRepository $professeurRepository): Response
     {
         /** @var Professeur $prof */
         $prof = $professeurRepository->findOneBy(array('user'=>$this->getUser()));
+
+        $disponibilite = new Disponibilite();
+        $form = $this->createForm(DisponibiliteType::class, $disponibilite);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $duree = $request->request->get("duree");
+            if ($duree=="15"){
+                $disponibilite->setDuree(new \DateTime('00:15:00'));
+            } elseif ($duree =="15"){
+                $disponibilite->setDuree(new \DateTime('00:30:00'));
+            }else{
+                $disponibilite->setDuree(new \DateTime('00:45:00'));
+            }
+            $disponibilite->setProfesseur($prof);
+            $entityManager->persist($disponibilite);
+
+            $listeCrenaux = $this->Fractionner1($disponibilite->getHeureDebut()->format("H:i:s"),$disponibilite->getHeureFin()->format("H:i:s"),$disponibilite->getDuree()->format("i"));
+
+            for ($i=0; $i < sizeof($listeCrenaux) -1; $i++) {
+                $creneau = new Creneau();
+                $creneau->setHeureDebut(new \DateTime($listeCrenaux[$i]));
+                $creneau->setHeureFin(new \DateTime($listeCrenaux[$i+1]));
+                $creneau->setOccupe(false);
+                $creneau->setDisponibilite($disponibilite);
+                $entityManager->persist($creneau);
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('disponibilite_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('disponibilite/index.html.twig', [
             'disponibilites' => $prof->getDisponibilites(),
-            'actionName'=>"Mes disponibilités"
+            'actionName'=>"Mes disponibilités",
+            'form' => $form->createView(),
 
         ]);
     }

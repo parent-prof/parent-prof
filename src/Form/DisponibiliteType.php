@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,19 +38,36 @@ class DisponibiliteType extends AbstractType
          */
         $prof = $options['data'];
         $builder
-            ->add('date_dispo', DateTimeType::class,[
-                'date_widget'=>'single_text'
+            ->add('date_dispo', DateType::class,[
+                'attr'=>[
+                    'class'=>'solo',
+                    'type' => "date"
+                ],
+                'widget' => 'single_text',
             ])
-            ->add('heure_debut', TimeType::class)
-            ->add('heure_fin')
-            ->add('duree',ChoiceType::class,[
+            ->add('heure_debut', TimeType::class,[
+                'widget' => 'single_text',
+            ])
+            ->add('heure_fin',TimeType::class,[
+                'widget' => 'single_text',
+            ])
+            /*->add('dure',ChoiceType::class,[
                 'multiple'=>false,
+                'mapped'=>false,
                 'expanded'=>true,
                 'choices'=>[
                     '15 min'=>new \DateTime('00:15:00'),
                     '30 min'=>new \DateTime('00:30:00'),
                     '45 min'=>new \DateTime('00:45:00'),
-                ]])
+                ],
+                'choice_attr' => [
+                    '15 min' => ['class' => 'selectgroup-input']
+                ],
+                'row_attr'=> ['class'=>'bonjour'],
+                'attr'=>[
+                    'class'=>'selectgroup w-100',
+                ]
+                ])*/
             ->add('promotion', EntityType::class,[
                 'class'=>Promotion::class,
                 'choices'=>$this->getPromotion()

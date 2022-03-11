@@ -12,13 +12,13 @@
                         <h4>Disponibilités ajoutés</h4>
                     </div>
                     <div class="card-body">
-                        <table class="table table-hover">
+                        <table class="table table-striped table-hover">
                             <thead>
                             <tr>
                                 <th scope="col">Date</th>
                                 <th scope="col">Période</th>
                                 <th scope="col">Classe</th>
-                                <th scope="col">Action</th>
+                                <th scope="col" class="text-center">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -27,7 +27,7 @@
                                     <th scope="col">{{ dispo.datedispo | date('d/m/Y') }}</th>
                                     <th scope="col">{{ dispo.heuredebut | date('h:i') }} - {{ dispo.heurefin | date('h:i') }}</th>
                                     <th scope="col">{{ dispo.promotion.nom }}</th>
-                                    <th scope="col">
+                                    <th scope="col" class="text-center">
                                         <a href="#" class="btn btn-outline-danger mt-2 ">Annuler</a>
                                         <a href="#" class="btn btn-outline-primari mt-2">Voir les crenaux </a>
                                     </th>
@@ -44,7 +44,42 @@
                         <h4>Ajouter une Disponibilités</h4>
                     </div>
                     <div class="card-body">
-
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ form_row(form.date_dispo) }}
+                            </div>
+                            <div class="col-md-12">
+                                {{ form_row(form.heure_debut) }}
+                            </div>
+                            <div class="col-md-12">
+                                {{ form_row(form.heure_fin) }}
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Durée des reunions</label>
+                                    <div class="selectgroup w-100">
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="duree" value="15" class="selectgroup-input" checked="">
+                                            <span class="selectgroup-button">15 min</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="duree" value="30" class="selectgroup-input">
+                                            <span class="selectgroup-button">30 min</span>
+                                        </label>
+                                        <label class="selectgroup-item">
+                                            <input type="radio" name="duree" value="45" class="selectgroup-input">
+                                            <span class="selectgroup-button">45 min</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                {{ form_row(form.promotion) }}
+                            </div>
+                        </div>
+                        <button class="btn btn-outline-primari mt-2 w-100 ">{{ button_label|default('Enregistrer') }}</button>
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
