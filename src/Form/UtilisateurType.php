@@ -2,22 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\Eleve;
+use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class EleveType extends AbstractType
+class UtilisateurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('matricule')
+            ->add('email')
             ->add('nom')
             ->add('prenom')
-            ->add('parents')
-            ->add('promotion')
+            ->add('mdp')
+            ->add('roles', ChoiceType::class, [
+                'multiple' => true,
+                'required' => true,
+                'expanded' => true,
+                'choices' => [
+                    'Parent' => 'ROLE_PARENT',
+                    'Professeur' => 'ROLE_PROF'
+                ]
+            ])
             ->add('imageFile',  VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
@@ -33,7 +42,7 @@ class EleveType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Eleve::class,
+            'data_class' => Utilisateur::class,
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Creneau;
+use App\Entity\Parents;
 use App\Entity\Reserver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -44,12 +45,12 @@ class ReserverRepository extends ServiceEntityRepository
     // /**
     //  * @return Reserver[] Returns an array of Reserver objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByIdParent(Parents $parent)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('r.parent = :val')
+            ->setParameter('val', $parent)
             ->orderBy('r.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
@@ -57,17 +58,16 @@ class ReserverRepository extends ServiceEntityRepository
         ;
     }
 
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Reserver
+
+    public function findOneBySomeField(Parents $parent): ?Reserver
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('r.parent_id = :val')
+            ->setParameter('val', $parent->getid())
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

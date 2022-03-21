@@ -39,6 +39,8 @@ class EleveController extends AbstractController
         if(in_array("ROLE_PROF",$this->getUser()->getRoles())){
             return $this->render('parent/eleve/index.html.twig', [
                 'eleves' => $promo->getEleves(),
+                'actionName'=>'eleve'
+
             ]);
         }
         return new Response();
@@ -63,6 +65,7 @@ class EleveController extends AbstractController
         return $this->renderForm('parent/eleve/new.html.twig', [
             'eleve' => $eleve,
             'form' => $form,
+            'actionName'=>'eleve'
         ]);
     }
 

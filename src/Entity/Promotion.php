@@ -138,4 +138,26 @@ class Promotion
         return (string) $this->nom;
     }
 
+    public function addElefe(Eleve $elefe): self
+    {
+        if (!$this->eleves->contains($elefe)) {
+            $this->eleves[] = $elefe;
+            $elefe->setPromotion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeElefe(Eleve $elefe): self
+    {
+        if ($this->eleves->removeElement($elefe)) {
+            // set the owning side to null (unless already changed)
+            if ($elefe->getPromotion() === $this) {
+                $elefe->setPromotion(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

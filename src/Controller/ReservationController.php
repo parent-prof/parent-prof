@@ -7,6 +7,8 @@ use App\Entity\Professeur;
 use App\Entity\Reserver;
 use App\Entity\ServerSetting;
 use App\Entity\Utilisateur;
+use App\Repository\ParentsRepository;
+use App\Repository\ReserverRepository;
 use App\Repository\ServerSettingRepository;
 use App\Services\MailService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,5 +49,19 @@ class ReservationController extends AbstractController
             $string .= $characters[mt_rand(0, strlen($characters) - 1)];
         }
         return $string;
+    }
+
+    /**
+     * @Route("parent/reservation", name="mes_reservations" ,methods={"GET", "POST"})
+     */
+    public function showReservation(ReserverRepository $reserverRepository , ParentsRepository $parentRepository, EntityManagerInterface $entityManager)
+    {
+        $parent = $parentRepository->findOneBy(array('user'=>$this->getUser()));
+        $liste_rdv =$reserverRepository->findByIdParent($parent);
+
+        return $this->render('reservation/index.html.twig', [
+            'mes_reunions' => $liste_rdv,
+            'actionName'=>"Mes reunions",
+        ]);
     }
 }

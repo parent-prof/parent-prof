@@ -31,6 +31,8 @@ class UtilisateurFixtures extends Fixture
             $utilisateur->setPrenom($faker->firstName);
             $utilisateur->setMdp(md5($faker->randomElement(array ('prof1','parent1','parent2','prof2'),1)));
             $utilisateur->setRoles($faker->randomElements(array ('ROLE_ADMIN','ROLE_PROF','ROLE_PARENT'), 1));
+            $utilisateur->setUpdatedAt(new \DateTime('now'));
+            $utilisateur->setImage('une image');
             $manager->persist($utilisateur);
 
             if (in_array("ROLE_PROF",$utilisateur->getRoles())){
@@ -81,6 +83,8 @@ class UtilisateurFixtures extends Fixture
             $eleve->setPrenom($faker->firstName);
             $eleve->setParents($faker->randomElement($this->parents));
             $eleve->setPromotion($faker->randomElement($this->promotions));
+            $eleve->setUpdatedAt(new \DateTime('now'));
+            $eleve->setImage('une image');
             $manager->persist($eleve);
 
             $manager->flush();
