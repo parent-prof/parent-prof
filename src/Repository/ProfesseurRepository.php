@@ -19,6 +19,10 @@ class ProfesseurRepository extends ServiceEntityRepository
         parent::__construct($registry, Professeur::class);
     }
 
+    public function findAllByName(String $name){
+        
+    }
+
     // /**
     //  * @return Professeur[] Returns an array of Professeur objects
     //  */

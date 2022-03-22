@@ -119,4 +119,8 @@ class Professeur
         return $this;
     }
 
+    public function __toString()
+    {
+        return (string) $this->getUser()->getNom() . ' '. $this->getUser()->getPrenom() .' ';
+    }
 }

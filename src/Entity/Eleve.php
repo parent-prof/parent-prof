@@ -108,4 +108,8 @@ class Eleve
 
         return $this;
     }
+    public function __toString()
+    {
+        return (string) $this->getNom() . ' '. $this->getPrenom() .' ';
+    }
 }

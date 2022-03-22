@@ -19,9 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PromotionController extends AbstractController
 {
+    
     /**
      * @Route("/", name="prof_promotion_index", methods={"GET"})
      */
+
     public function index(PromotionRepository $promotionRepository, ProfesseurRepository $professeurRepository): Response
     {
         /**
@@ -35,6 +37,22 @@ class PromotionController extends AbstractController
             'promotions' => $prof->getPromotions(),
             'actionName' =>'Promotions'
         ]);
+    }
+    /**
+    * @Route("/allprofs", name="allprofs", methods={"GET"})
+    */
+    public function findProfsByPromotion( ProfesseurRepository $professeurRepository)
+    {
+        
+        $profs = $professeurRepository->findAll();
+        $profsByPromo = array_filter($profs, function($prof){
+            return $prof->getPromotion()->getId() === "1";
+        });
+        $str = "";
+        for ($i=0; $i < count($profsByPromo); $i++) { 
+          $str .= $profsByPromo[$i]->getPromotions()->getIterator()."<br>";  
+        }
+        return new Response($str);
     }
 
     /**
