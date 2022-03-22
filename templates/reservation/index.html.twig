@@ -18,9 +18,9 @@
         {% for reunion in mes_reunions %}
             <tr>
                 <td>{{ reunion.id }}</td>
-                <td>{{ reunion.creneau_id }}</td>
-                <td>{{ reunion.eleve_id }}</td>
-                <td>{{ reunion.lien_reunion }}</td>
+                <td>{{ reunion.creneau.id }}</td>
+                <td>{{ reunion.eleve.id }}</td>
+                <td>{{ reunion.lienReunion }}</td>
             </tr>
         {% else %}
             <tr>
