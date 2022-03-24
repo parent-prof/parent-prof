@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+
+{% for eleve in eleves %}
+     <div class="col-12">
+     <a href="{{ path('info' , {'id': eleve.id })}}"> {{eleve.nom}} </a>
+     </div>
+{% endfor %}
+{% endblock %}

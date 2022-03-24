@@ -84,7 +84,7 @@ class Eleve
 
         return $this;
     }
-
+    
     public function getParents(): ?Parents
     {
         return $this->parents;

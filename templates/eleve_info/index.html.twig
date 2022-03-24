@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EleveInfoController!{% endblock %}
+
+{% block body %}
+<div class="col-12">
+ <h1>informations de l'enfant {{eleve.nom}}</h1>
+
+</div>
+
+      
+    <div class="col-3">
+        {{parents.user.nom}}
+        {{promotion.nom}}
+        {{promotion.professeur.user.nom}}
+    </div>
+
+
+    
+
+    
+{% endblock %}
