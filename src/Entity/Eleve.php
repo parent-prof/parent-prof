@@ -39,7 +39,7 @@ class Eleve
     private $parents;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Promotion::class, inversedBy="eleves")
+     * @ORM\ManyToOne(targetEntity=Promotion::class, inversedBy="eleves", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $promotion;
@@ -107,5 +107,10 @@ class Eleve
         $this->promotion = $promotion;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getNom() . ' '. $this->getPrenom() .' ';
     }
 }

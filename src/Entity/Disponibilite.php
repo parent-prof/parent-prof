@@ -56,6 +56,7 @@ class Disponibilite
 
     /**
      * @ORM\OneToMany(targetEntity=Creneau::class, mappedBy="disponibilite", orphanRemoval=true, fetch="EAGER")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $creneaux;
 

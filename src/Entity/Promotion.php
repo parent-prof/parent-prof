@@ -25,7 +25,7 @@ class Promotion
     private $nom;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Professeur::class, inversedBy="promotions")
+     * @ORM\ManyToOne(targetEntity=Professeur::class, inversedBy="promotions" , fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $professeur;

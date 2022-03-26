@@ -20,7 +20,7 @@ class Professeur
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"} , fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -117,6 +117,10 @@ class Professeur
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+        return (string) $this->getUser()->getNom() . ' '. $this->getUser()->getPrenom() .' ';
     }
 
 }

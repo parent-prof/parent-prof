@@ -1,0 +1,72 @@
+{% extends 'base-parent.html.twig' %}
+
+{% block title %}Disponibilite index{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/demo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/simple-calendar.css') }}">
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/jquery.simple-calendar.js') }}"></script>
+<script>
+    var $calendar;
+    var demo = '{{ 'bonjour' }}';
+    let data = ''
+    $(document).ready(function() {
+        data= $('#test').data("isTest");
+        console.log(data);
+    });
+    $(document).ready(function () {
+        let container = $("#container").simpleCalendar({
+            fixedStartDay: 0, // begin weeks by sunday
+            disableEmptyDetails: true,
+            events:data,
+        });
+        $calendar = container.data('plugin_simpleCalendar')
+    });
+</script>
+{% endblock %}
+{% block body %}
+    <div id="test" data-is-test="{{ event|json_encode }}"></div>
+    <div class="main-content px-4">
+        <section class="section">
+            <div class="section-body">
+
+                <h2 class="section-title">Prendre rendez-vous</h2>
+                <p class="section-lead">
+
+                </p>
+                <div class="row mt-sm-4">
+                    <div class="col-12 col-md-12 col-lg-4">
+                        <div class="card profile-widget">
+                            <div class="profile-widget-header">
+                                <img alt="image" src="{{ asset('images/admin.png') }}"  alt="" width="80" height="80" class="rounded-circle profile-widget-picture">
+                            </div>
+                            <div class="profile-widget-description">
+                                <div class="profile-widget-name">{{ professeur.user.nom}} {{ professeur.user.prenom}}<div class="text-muted d-inline font-weight-normal"><div class="slash"></div></div></div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="font-weight-bold mb-2">Mathematiques</div>
+                                <a href="#" class="btn btn-social-icon btn-facebook mr-1">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="btn btn-social-icon btn-twitter mr-1">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="btn btn-social-icon btn-github mr-1">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="btn btn-social-icon btn-instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-secondary col-12 col-md-12 col-lg-8">
+                        <div class="card-body calendar" id="container"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

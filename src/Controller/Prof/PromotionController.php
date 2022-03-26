@@ -66,6 +66,7 @@ class PromotionController extends AbstractController
     {
         return $this->render('prof/promotion/show.html.twig', [
             'promotion' => $promotion,
+            'actionName'=>'Promotion'
         ]);
     }
 

@@ -32,7 +32,7 @@ class EleveController extends AbstractController
         $prof = $professeurRepository->findOneBy(array('user'=>$utilisateur));
         $promo = $promotionRepository->findOneBy(array('professeur'=>$prof));
         if(in_array("ROLE_PARENT",$this->getUser()->getRoles())){
-            return $this->render('parent/eleve/index.html.twig', [
+            return $this->render('parent/accueil/index.html.twig', [
                 'eleves' => $parent->getEleves(),
             ]);
         }
@@ -73,6 +73,7 @@ class EleveController extends AbstractController
     {
         return $this->render('parent/eleve/show.html.twig', [
             'eleve' => $eleve,
+            'actionName'=>'Eleve'
         ]);
     }
 

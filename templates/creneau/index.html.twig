@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Creneau index{% endblock %}
+
+{% block body %}
+    <h1>Creneau index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Heure_debut</th>
+                <th>Heure_fin</th>
+                <th>Occupe</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for creneau in creneaus %}
+            <tr>
+                <td>{{ creneau.id }}</td>
+                <td>{{ creneau.heureDebut ? creneau.heureDebut|date('H:i:s') : '' }}</td>
+                <td>{{ creneau.heureFin ? creneau.heureFin|date('H:i:s') : '' }}</td>
+                <td>{{ creneau.occupe ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('creneau_show', {'id': creneau.id}) }}">show</a>
+                    <a href="{{ path('creneau_edit', {'id': creneau.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('creneau_new') }}">Create new</a>
+{% endblock %}

@@ -33,7 +33,7 @@ class Creneau
     private $occupe;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Disponibilite::class, inversedBy="creneaux")
+     * @ORM\ManyToOne(targetEntity=Disponibilite::class, inversedBy="creneaux", cascade={"remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $disponibilite;

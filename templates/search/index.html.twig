@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Promotion index{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h4>" {{ target }} "</h4>
+        </div>
+        <div class="card-body">
+            <div class="list-group">
+                {% for data in allData %}
+                    <a href="{{ path(data.path, {'id': data.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ data.nom}}  {{ data.prenom }}</h5>
+                            <small></small>
+                        </div>
+                        <small>{{ data.type }}</small>
+                    </a>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -140,10 +140,8 @@ class DisponibiliteController extends AbstractController
      */
     public function delete(Request $request, Disponibilite $disponibilite, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$disponibilite->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($disponibilite);
-            $entityManager->flush();
-        }
+        $entityManager->remove($disponibilite);
+        $entityManager->flush();
 
         return $this->redirectToRoute('disponibilite_index', [], Response::HTTP_SEE_OTHER);
     }

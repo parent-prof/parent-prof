@@ -1,20 +1,127 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-parent.html.twig' %}
 
-{% block title %}Hello AccueilController!{% endblock %}
+{% block title %}Disponibilite index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <nav class="navbar navbar-secondary navbar-expand-lg">
+        <div class="container justify-content-center">
+            <ul class="navbar-nav mx-auto list-group list-group-horizontal" style="margin-top: 10px;">
+                <li class="mr-4 nav-item">
+                    <a class="active" id="home-tab" data-toggle="tab" href="#home" ><h4>Mes enfants</h4></a>
+                </li>
+                <li class="ml-3">
+                    <a class="border_bottom" id="profile-tab" data-toggle="tab" href="#profile" >
+                        <h4>Mes reunions
+                        </h4></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="main-content">
+        <section class="section">
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="home">
+                    <h2 class="section-title">Mes enfants </h2>
+                    <p class="section-lead">
+                    </p>
+                    <div class="row">
+                            {% for eleve in eleves %}
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card " style="border-top: 2px solid #1ABC9C;">
+                                <div class="card-header">
+                                    <h4 class="text-dark">{{ eleve.promotion.professeur.user.nom }} {{ eleve.promotion.professeur.user.prenom }}</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5 class="text-dark bold">{{ eleve.nom }} {{ eleve.prenom }}</h5>
+                                        </div>
+                                        <div class="col text-center w-100">
+                                            <div>
+                                                <div class="">
+                                                    <img src="{{ asset('images/user_icon.png') }}" class="im_g" alt="" width="80" height="80">
+                                                    <p class="text-right mr-3 text_t">{{ eleve.promotion.nom }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="background-color: rgba(27,27,27,0.26); height: 1px; width: 100%"></div>
+                                    </div>
+                                    <a href="{{ path('prendre_rdv', {'id': eleve.id}) }}" class="btn btn-outline-primari mt-2 w-100">Prendre rendez-vous </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/DEV/parent-prof/src/Controller/Parent/AccueilController.php'|file_link(0) }}">src/Controller/Parent/AccueilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/DEV/parent-prof/templates/parent/accueil/index.html.twig'|file_link(0) }}">templates/parent/accueil/index.html.twig</a></code></li>
-    </ul>
-</div>
+                <div class="tab-pane" id="profile">
+                    <p class="section-lead">
+{#
+                        Examples for badges, our small count and labeling component.
+#}
+                    </p>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Reunions en attentes</h4>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <tbody><tr>
+                                                    <th>
+
+                                                    </th>
+                                                    <th>Nom professeur</th>
+                                                    <th>Nom de l'enfant</th>
+                                                    <th>Heure de debut</th>
+                                                    <th>Heure de fin</th>
+                                                    <th>Classes</th>
+                                                    <th>Statut</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                    {% for reservation in reservations %}
+                                                        <tr>
+                                                            <td class="p-0 text-center">
+                                                                <div class="custom-checkbox custom-control">
+                                                                    <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                                                                    <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                                                </div>
+                                                            </td>
+                                                            <td>{{ reservation.creneau.disponibilite.professeur.user.nom}} {{ reservation.creneau.disponibilite.professeur.user.prenom}}</td>
+                                                            <td class="align-middle">
+                                                                {{ reservation.eleve.nom }} {{ reservation.eleve.prenom }}
+                                                            </td>
+                                                            <td>
+                                                                {{ reservation.creneau.heuredebut|date('H:i') }}
+                                                            </td>
+                                                            <td>
+                                                                {{ reservation.creneau.heurefin|date('H:i') }}
+                                                            </td>
+                                                            <td>
+                                                                {{ reservation.eleve.promotion.nom }}
+                                                            </td>
+                                                            <td><div class="text-primary mb-2">{% if reservation.confirmation == true %} Confirmé {% else %} Non confirmé {% endif %}</div></td>
+                                                            <td>
+                                                                {% if reservation.confirmation == true %}
+                                                                <a href="{{ videoServer.value }}?room={{reservation.lienReunion}}" class="btn btn-outline-primary">Se connecter</a>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 {% endblock %}
