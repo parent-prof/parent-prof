@@ -48,4 +48,19 @@ class ReservationController extends AbstractController
         }
         return $string;
     }
+    function encryptLink($date_dispo, $heure_dispo){
+        $plain_text =''.date_format($date_dispo, 'Y-m-d')."/".date_format($heure_dispo, 'H:i:s');
+        // Store the cipher method
+        $ciphering = "AES-128-CTR";
+        // Use OpenSSl Encryption method
+        $iv_length = openssl_cipher_iv_length($ciphering);
+        $options = 0;
+        // Non-NULL Initialization Vector for encryption
+        $encryption_iv = '1234567891011121';
+        // Store the encryption key
+        $encryption_key = "parentProf";
+        // Use openssl_encrypt() function to encrypt the data
+        $encryption = openssl_encrypt($plain_text, $ciphering, $encryption_key, $options, $encryption_iv);
+        return $encryption;
+    }
 }

@@ -37,7 +37,7 @@ class DisponibiliteController extends AbstractController
             $duree = $request->request->get("duree");
             if ($duree=="15"){
                 $disponibilite->setDuree(new \DateTime('00:15:00'));
-            } elseif ($duree =="15"){
+            } elseif ($duree =="30"){
                 $disponibilite->setDuree(new \DateTime('00:30:00'));
             }else{
                 $disponibilite->setDuree(new \DateTime('00:45:00'));

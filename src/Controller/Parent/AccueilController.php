@@ -26,6 +26,9 @@ class AccueilController extends AbstractController
         /**
          * @var Utilisateur
          */
+
+
+
         $utilisateur = $this->getUser();
         $parent = $parentsRepository->findOneBy(array('user'=>$utilisateur));
         $prof = $professeurRepository->findOneBy(array('user'=>$utilisateur));
@@ -45,5 +48,28 @@ class AccueilController extends AbstractController
         }
         return new Response();
     }
-
+/*
+    function encryptLink( $plain_text){
+        // Store the cipher method
+        $ciphering = "AES-128-CTR";
+        // Use OpenSSl Encryption method
+        $iv_length = openssl_cipher_iv_length($ciphering);
+        $options = 0;
+        // Non-NULL Initialization Vector for encryption
+        $encryption_iv = '1234567891011121';
+        // Store the encryption key
+        $encryption_key = "parentProf";
+        // Use openssl_encrypt() function to encrypt the data
+        $encryption = openssl_encrypt($plain_text, $ciphering, $encryption_key, $options, $encryption_iv);
+        return $encryption;
+    }
+    function decryptLink($encryption){
+        $ciphering = "AES-128-CTR";
+        $decryption_iv = '1234567891011121';
+        $options = 0;
+        // Store the decryption key
+        $decryption_key = "parentProf";
+        return openssl_decrypt($encryption, $ciphering,$decryption_key, $options, $decryption_iv);
+    }
+*/
 }
