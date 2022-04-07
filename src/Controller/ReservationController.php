@@ -22,7 +22,7 @@ class ReservationController extends AbstractController
     public function index(Reserver $reserver, EntityManagerInterface $entityManager, MailService $mail, ServerSettingRepository $settingRepository): Response
     {
         $reserver->setConfirmation(true);
-        $reserver->setLienReunion($this->getRandomRoomId());
+        $reserver->setLienReunion($this->encryptLink($reserver->getCreneau()->getDisponibilite()->getDateDispo(),$reserver->getCreneau()->getDisponibilite()->getHeureDebut()));
         $entityManager->persist($reserver);
         $entityManager->flush();
 
