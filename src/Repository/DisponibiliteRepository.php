@@ -18,6 +18,24 @@ class DisponibiliteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Disponibilite::class);
     }
+     /**
+      * @return Disponibilite[] Returns an array of Disponibilite objects
+      */
+    
+    public function findByDateLike($value)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.date_dispo >= :val')
+            ->setParameter('val', $value)
+            ->orderBy('d.date_dispo', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    
+    
+
 
     // /**
     //  * @return Disponibilite[] Returns an array of Disponibilite objects

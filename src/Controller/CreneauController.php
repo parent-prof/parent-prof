@@ -29,7 +29,15 @@ class CreneauController extends AbstractController
         $creneau = new Creneau();
         $form = $this->createForm(CreneauType::class, $creneau);
         $form->handleRequest($request);
+        if ($creneau->getHeureDebut() >= $creneau->getHeureFin()){
+            return $this->renderForm('creneau/new.html.twig', [
+                'creneau' => $creneau,
+                'form' => $form,
+                'actionName'=>'crenau'
+    
+            ]);
 
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($creneau);
             $entityManager->flush();
