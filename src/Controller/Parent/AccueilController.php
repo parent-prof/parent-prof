@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     /**
-     * @Route("/", name="parent_accueil")
+     * @Route("/parent", name="parent_accueil")
      */
     public function index(ReserverRepository $reserverRepository, ServerSettingRepository $settingRepository, ParentsRepository $parentsRepository, ProfesseurRepository $professeurRepository, PromotionRepository $promotionRepository): Response
     {
