@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Eleve;
 use App\Entity\Reserver;
+use App\Entity\Promotion;
 use App\Repository\CreneauRepository;
 use App\Repository\EleveRepository;
 use App\Repository\ParentsRepository;
 use App\Repository\ReserverRepository;
+use App\Repository\PromotionRepository;
 use App\Services\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -104,14 +106,16 @@ class PrendreRendezVousController extends AbstractController
     /**
      * @Route("/prendre-rdv", name="rdv" ,methods={"GET", "POST"})
      */
-    public function getEve(MailService $mail,Request $request, EleveRepository $eleveRepository, ParentsRepository $parentsRepository, CreneauRepository $creneauRepository, ReserverRepository $reserverRepository, EntityManagerInterface $entityManager): Response
+    public function getEve(MailService $mail,Request $request, EleveRepository $eleveRepository, ParentsRepository $parentsRepository, CreneauRepository $creneauRepository,PromotionRepository $promotionRepository, ReserverRepository $reserverRepository, EntityManagerInterface $entityManager): Response
     {
+        $mail->setNatureMail("prendreRendezVous");
         $eleveId = $request->get('eleve-id');
         $parentId = $request->get('parent-id');
         $creneauId = $request->get('creneau-id');
         $eleve = $eleveRepository->find($eleveId);
         $parent = $parentsRepository->find($parentId);
         $creneau = $creneauRepository->find($creneauId);
+        $promotion = $eleve->getPromotion();
         $creneau->setOccupe(true);
         $reserver = new Reserver();
         $reserver->setCreneau($creneau);
@@ -122,12 +126,14 @@ class PrendreRendezVousController extends AbstractController
         $entityManager->persist($reserver);
         $entityManager->flush();
 
-        $mail->setNomPa($parent->getUser()->getNom() . ' ' . $parent->getUser()->getPrenom());
-        $mail->setNomP($creneau->getDisponibilite()->getProfesseur()->getUser()->getNom());
+        $mail->setNomParent($parent->getUser()->getNom() . ' ' . $parent->getUser()->getPrenom());
+        $mail->setNomProf($creneau->getDisponibilite()->getProfesseur()->getUser()->getNom());
         $mail->setHeure($creneau->getHeureDebut()->format('H:i') . '-' . $creneau->getHeureFin()->format('H:i'));
         $mail->setDate($creneau->getDisponibilite()->getDateDispo()->format('Y M d'));
         $mail->setLien("Vous avez une nouvelle reunion");
-        $mail->sendEmail($creneau->getDisponibilite()->getProfesseur()->getUser()->getEmail());
+        $mail->setNomEleve($eleve->getNom());
+        $mail->setPromotion($promotion->getNom());
+        $mail->sendMail($creneau->getDisponibilite()->getProfesseur()->getUser()->getEmail()); 
         return $this->redirectToRoute('parent_accueil', [], Response::HTTP_SEE_OTHER);
 
     }

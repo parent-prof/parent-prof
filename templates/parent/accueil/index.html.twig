@@ -108,6 +108,8 @@
                                                             <td>
                                                                 {% if reservation.confirmation == true %}
                                                                 <a href="{{ videoServer.value }}?room={{reservation.lienReunion}}" class="btn btn-outline-primary">Se connecter</a>
+                                                                {{ include('reservation/_delete_form.html.twig') }}
+
                                                                 {% endif %}
                                                             </td>
                                                         </tr>
