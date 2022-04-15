@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9/sha256.js"></script>
+  <script>
+    function CryptoJSAesDecrypt(encrypted){
+      var encrypted = encrypted;
+      var iv = '1234567891011121'
+
+      var key = 'parentProf'
+      var decrypted = CryptoJS.AES.decrypt(encrypted, key, iv);
+
+      return decrypted.toString(CryptoJS.enc.Utf8);
+      //return decrypted;
+    }
+    CryptoJSAesDecrypt('parentProf')
+  </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -13,9 +13,9 @@ class CalendrierController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('calendrier/index.html.twig', [
+        return $this->render('calendrier/index.html2.twig', [
             'controller_name' => 'CalendrierController',
-            'actionName' =>'Calendrier'
+            'actionName' =>'Agenda'
 
         ]);
     }

@@ -40,6 +40,7 @@ class CreneauRepository extends ServiceEntityRepository
                 }
             }
         }
+
         return $crenaux;
 
     }

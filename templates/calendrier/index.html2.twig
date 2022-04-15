@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CalendrierController!{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/CalendarPicker.style.css') }}">
+    <style>
+
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('js/CalendarPicker.js') }}"></script>
+
+    <script>
+        const nextYear = new Date().getFullYear() + 1;
+        const myCalender = new CalendarPicker('#myCalendarWrapper', {
+
+        });
+
+        const currentDateElement = document.getElementById('current-date');
+        currentDateElement.textContent = myCalender.value;
+
+        const currentDayElement = document.getElementById('current-day');
+        currentDayElement.textContent = myCalender.value.getDay();
+
+        const currentToDateString = document.getElementById('current-datestring');
+        currentToDateString.textContent = myCalender.value.toDateString();
+
+        myCalender.onValueChange((currentValue) => {
+            currentDateElement.textContent = currentValue;
+            currentDayElement.textContent = currentValue.getDay();
+            currentToDateString.textContent = currentValue.toDateString();
+
+            console.log(`The current value of the calendar is: ${currentValue}`);
+        });
+    </script>
+
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-4">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h4>Reunions à venir</h4>
+                </div>
+                <div id="showcase-wrapper">
+                    <div id="myCalendarWrapper"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8" id="reunions"></div>
+    </div>
+{% endblock %}
