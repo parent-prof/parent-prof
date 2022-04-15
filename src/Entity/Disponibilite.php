@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=DisponibiliteRepository::class)
  * @UniqueEntity(
- *     fields={"professeur" ,"date_dispo","heure_debut"},
+ *     fields={"promotion", "professeur" ,"date_dispo","heure_debut"},
  *     message="This entity is already in use on that host."
  * )
  */
@@ -26,16 +27,20 @@ class Disponibilite
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\GreaterThan(propertyPath="heure_debut", message="L'heure defin doit être supérieure à l'heure de début")
      */
     private $heure_fin;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual("today UTC", message ="La date doit être supérieure à la date du jour")
+     *
      */
     private $date_dispo;
 
     /**
      * @ORM\Column(type="time")
+     * @Assert\LessThan(propertyPath="heure_fin", message="L'heure de début doit être inférieure à l'heure de fin")
      */
     private $heure_debut;
 
@@ -55,8 +60,7 @@ class Disponibilite
     private $promotion;
 
     /**
-     * @ORM\OneToMany(targetEntity=Creneau::class, mappedBy="disponibilite", orphanRemoval=true, fetch="EAGER")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\OneToMany(targetEntity=Creneau::class, mappedBy="disponibilite", orphanRemoval=true)
      */
     private $creneaux;
 
