@@ -1,0 +1,28 @@
+{# templates/emails/signup.html.twig #}
+<!doctype html>
+<html lang="en">
+<head><!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Bootstrap CSS -->
+
+</head>
+<body>
+
+<section class="mail-seccess section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-12">
+                <!-- Error Inner -->
+                <div class="success-inner">
+                    <h1><i class="fa fa-envelope"></i><span>CONFIRMATION D'UNE REUNION</span></h1>
+                    <p>Monsieur/Madame {{nomProf}} serait vous disponible le {{date}} à {{heure}} pour avoir un entretion avec monsieur {{nomParent}} parent de l'élève {{nomEleve}} de la promotion de {{promotion}}?</p>
+                    <p>Veuillez-vous connecter sur l'application pour confirmer.</p>
+                </div>
+                <!--/ End Error Inner -->
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
