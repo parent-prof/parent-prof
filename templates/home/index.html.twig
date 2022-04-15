@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
 
     <title>Carousel Template for Bootstrap</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/carousel.css" rel="stylesheet">
@@ -132,7 +131,7 @@
         <div class="row featurette" id="prof">
             <div class="col-md-7 order-md-2">
                 <h2 class="featurette-heading">Vous êtes un professeur</h2>
-                <span></span><p class="lead"><a href= {{ path('app_login') }} class = "btn btn-lg col-6" style="background-color: #1ABC9C; color: white">Connectez-vous</a></p>
+                <span></span><p class="lead"><a href= {{ path('app_login', {'nature': 'prof'})  }}}} class = "btn btn-lg col-6" style="background-color: #1ABC9C; color: white">Connectez-vous</a></p>
             </div>
             <div class="col-md-5 order-md-1">
                 <img class="featurette-image img-fluid mx-auto" src="/images/prof_eleve.jpg" alt="Generic placeholder image">
