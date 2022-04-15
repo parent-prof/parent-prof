@@ -173,6 +173,14 @@ CalendarPicker.prototype._insertCalendarIntoWrapper = function () {
             axios.get('/api-reunion?date='+date)
                 .then((response) => {
                     console.log(response.data);
+                    if (response.data.length === 0){
+                        console.log('ZERO');
+                        var contentDiv = document.createElement('div');
+                        var h6 = document.createElement('h4');
+                        h6.textContent = "Vous n'avez encore aucun rendez pris a cette date"
+                        contentDiv.appendChild(h6)
+                        reunionsDiv.appendChild(contentDiv)
+                    }
 
                     for (let i = 0; i < response.data.length; i++) {
                         console.log('valuer de i ' + i)

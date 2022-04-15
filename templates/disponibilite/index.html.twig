@@ -29,7 +29,7 @@
                                     <th scope="col">{{ dispo.promotion.nom }}</th>
                                     <th scope="col" class="d-flex">
                                         {{ include('disponibilite/_delete_form.html.twig') }}
-                                        <a href="#" class="btn btn-outline-primari">Voir les crenaux </a>
+                                        <a href="{{ path('mescrenaux', {'id': dispo.id}) }}" class="btn btn-outline-primari">Voir les crenaux </a>
                                     </th>
                                 </tr>
                             {% endfor %}

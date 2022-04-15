@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Disponibilite;
 use App\Entity\Professeur;
 use App\Form\DisponibiliteType;
+use App\Repository\CreneauRepository;
 use App\Repository\DisponibiliteRepository;
 use App\Repository\ProfesseurRepository;
 use App\datetime;
@@ -176,5 +177,16 @@ class DisponibiliteController extends AbstractController
             $StartTime += $AddMins;
         }
         return $ReturnArray;
+    }
+
+    /**
+     * @Route("/crenaux/{id}", name="mescrenaux", methods={"GET"})
+     */
+    public function getCrenaux(Disponibilite $disponibilite, CreneauRepository $creneauRepository): Response
+    {
+        return $this->render('disponibilite/show.html.twig', [
+            'disponibilite' => $disponibilite,
+            'actionName'=>'Creneaux du '. $disponibilite->getDateDispo()->format('d-m-Y')
+        ]);
     }
 }

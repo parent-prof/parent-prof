@@ -111,7 +111,7 @@
                                                     <td><div class="text-primary mb-2">{{ reserveNonConfirme.creneau.disponibilite.datedispo | date('d/m/Y')}}</div></td>
                                                     <td>
                                                         <a href="{{ path('confirme_reservation', {'id': reserveNonConfirme.id}) }}" class="btn btn-outline-primary">Confirmer</a>
-                                                        <a href="#" class="btn btn-icon icon-left btn-danger"> Modifier</a>
+                                                        <a href="{{ path('reunion_remove', {'id': reserveNonConfirme.id}) }}" class="btn btn-icon icon-left btn-danger"> Annuler</a>
                                                     </td>
                                                 </tr>
                                                 {% endfor %}

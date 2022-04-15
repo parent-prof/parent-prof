@@ -9,7 +9,7 @@
             <div class="col-12 col-md-12 col-lg-5">
                 <div class="card profile-widget">
                     <div class="profile-widget-header">
-                        <img alt="image" src="C:\Users\Monkam Towo\OneDrive\Images\moi.jfif" class="rounded-circle profile-widget-picture">
+                        <img alt="image" src="{{ asset('images/user.png') }}" class="rounded-circle profile-widget-picture">
                     </div>
                     <div class="profile-widget-description">
                         <div class="profile-widget-name">{{ app.user.nom }}  {{ app.user.prenom }}<div class="text-muted d-inline font-weight-normal"><div class="slash"></div> MATHEMATIQUES</div></div>
@@ -18,7 +18,7 @@
             </div>
             <div class="col-12 col-md-12 col-lg-7">
                 <div class="card">
-                    <form method="post" class="needs-validation" novalidate="">
+                    <form method="post" class="needs-validation" action="{{ path('moncompte') }}">
                         <div class="card-header">
                             <h4>Votre profile</h4>
                         </div>
@@ -26,34 +26,28 @@
                             <div class="row">
                                 <div class="form-group col-md-6 col-12">
                                     <label>Prenom</label>
-                                    <input type="text" class="form-control" value="Ujang" required="">
+                                    <input type="text" class="form-control" value="{{ app.user.prenom }}" required="" name="prenom">
                                     <div class="invalid-feedback">
-                                        Please fill in the first name
+                                        Veuillez renseigner ce champ
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 col-12">
                                     <label>Nom</label>
-                                    <input type="text" class="form-control" value="Maman" required="">
+                                    <input type="text" class="form-control" value="{{ app.user.nom }}" required="" name="nom">
                                     <div class="invalid-feedback">
-                                        Please fill in the last name
+                                        Veuillez renseigner ce champ
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-7 col-12">
                                     <label>Adresse mail</label>
-                                    <input type="email" class="form-control" value="ujang@maman.com" required="">
+                                    <input type="email" class="form-control" value="{{ app.user.email }}" required="" name="mail">
                                     <div class="invalid-feedback">
-                                        Please fill in the email
+                                        Veuillez renseigner ce champ
                                     </div>
                                 </div>
 
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-5 col-12">
-                                    <label>Mot de passe</label>
-                                    <input type="tel" class="form-control" value="">
-                                </div>
                             </div>
                         </div>
                         <button class="btn btn-outline-primary mt-2 w-100 ">Enregistrer</button>

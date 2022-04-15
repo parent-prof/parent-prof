@@ -8,13 +8,14 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=DisponibiliteRepository::class)
- * @UniqueEntity(
- *     fields={"promotion", "professeur" ,"date_dispo","heure_debut"},
- *     message="This entity is already in use on that host."
- * )
+ * @UniqueEntity(fields={"professeur","promotion"}, message="There is already an account with this email")
+ * @Vich\Uploadable
  */
 class Disponibilite
 {
@@ -30,7 +31,6 @@ class Disponibilite
      * @Assert\GreaterThan(propertyPath="heure_debut", message="L'heure defin doit être supérieure à l'heure de début")
      */
     private $heure_fin;
-
     /**
      * @ORM\Column(type="date")
      * @Assert\GreaterThanOrEqual("today UTC", message ="La date doit être supérieure à la date du jour")

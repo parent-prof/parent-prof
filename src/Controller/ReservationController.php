@@ -55,7 +55,7 @@ class ReservationController extends AbstractController
         return $string;
     }
     
-      /**
+    /**
      * @Route("/reservation/delete/{id}", name="reservation_delete", methods={"GET","POST"})
      * 
      */
@@ -93,5 +93,22 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('parent_accueil', [], Response::HTTP_SEE_OTHER);
         
     }
-    
+
+
+    /**
+     * @Route("/reunion/delete/{id}", name="reunion_remove", methods={"GET","POST"})
+     *
+     */
+    public function removeReunion(Reserver $reserver, EntityManagerInterface $entityManager): Response
+    {
+        $creneau = $reserver->getCreneau();
+        $creneau->setOccupe(false);
+
+        $entityManager->remove($reserver);
+        $entityManager->persist($creneau);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('prof_accueil', [], Response::HTTP_SEE_OTHER);
+    }
+
 }
