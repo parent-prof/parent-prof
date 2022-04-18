@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Carousel Template for Bootstrap</title>
+    <title>Bienvenue sur le site</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
 
@@ -102,12 +102,6 @@
                     confirmez vos rendez-vous et participez à des réunions avec des parents d'élève.</p>
             </div>
             <div class="col-lg-4">
-                <img class="rounded-circle" src="/images/professeur.jpg" alt="Generic placeholder image" width="140" height="140">
-                <h2>Professeurs</h2>
-                <p> Connectez vous à votre compte et accédez à vos informations, renseignez vos disponibilités, consultez vos promotions,
-                    confirmez vos rendez-vous et participez à des réunions avec des parents d'élève.</p>
-            </div>
-            <div class="col-lg-4">
                 <img class="rounded-circle" src="/images/parent.jpg" alt="Generic placeholder image" width="140" height="140">
                 <h2>Parents</h2>
                 <p>Connectez vous et consultez les informations sur vos enfants, consultez les disponibilités des différents Professeurs principaux de
@@ -124,7 +118,7 @@
         <div class="row featurette" id= "parent">
             <div class="col-md-7">
                 <h2 class="featurette-heading">Vous êtes un Parent </h2>
-                <p class="lead"><a href= {{ path('app_login') }} class = "btn btn-lg col-6" style="background-color: #1ABC9C; color: white">Connectez-vous</a></p>
+                <p class="lead"><a href= {{ path('app_login', {'nature': 'parent'}) }} class = "btn btn-lg col-6" style="background-color: #1ABC9C; color: white">Connectez-vous</a></p>
             </div>
             <div class="col-md-5">
                 <img class="featurette-image img-fluid mx-auto" src="/images/Ado_parent.jpg" alt="Generic placeholder image">
@@ -136,7 +130,7 @@
         <div class="row featurette" id="prof">
             <div class="col-md-7 order-md-2">
                 <h2 class="featurette-heading">Vous êtes un professeur</h2>
-                <span></span><p class="lead"><a href= {{ path('app_login', {'nature': 'prof'})  }}}} class = "btn btn-lg col-6" style="background-color: #1ABC9C; color: white">Connectez-vous</a></p>
+                <span></span><p class="lead"><a href= {{ path('app_login', {'nature': 'prof'}) }} class = "btn btn-lg col-6" style="background-color: #1ABC9C; color: white">Connectez-vous</a></p>
             </div>
             <div class="col-md-5 order-md-1">
                 <img class="featurette-image img-fluid mx-auto" src="/images/prof_eleve.jpg" alt="Generic placeholder image">

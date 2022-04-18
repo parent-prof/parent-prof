@@ -27,7 +27,6 @@ class AccueilController extends AbstractController
     {
         /** @var Professeur $prof */
         $prof = $professeurRepository->findOneBy(array('user'=>$this->getUser()));
-        dump($prof);
 
         /** @var Disponibilite $disponibilites[] */
         $disponibilites = $prof->getDisponibilites();

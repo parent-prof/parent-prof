@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Parents;
+use App\Entity\ServerSetting;
 use App\Entity\Utilisateur;
 
 
@@ -26,12 +27,30 @@ class UtilisateurFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
         for ($i = 0; $i < 100; $i++) {
             $utilisateur = new Utilisateur();
-            $utilisateur->setEmail($faker->email);
-            $utilisateur->setNom($faker->lastName);
-            $utilisateur->setPrenom($faker->firstName);
-            $utilisateur->setMdp(md5($faker->randomElement(array ('prof1','parent1','parent2','prof2'),1)));
-            $utilisateur->setRoles($faker->randomElements(array ('ROLE_ADMIN','ROLE_PROF','ROLE_PARENT'), 1));
-            $manager->persist($utilisateur);
+
+            // Compte PROFESSEUR
+            if($i==0){
+                $utilisateur->setEmail("prof1@mail.test");
+                $utilisateur->setNom("Doum Akono ");
+                $utilisateur->setPrenom("Rudolph");
+                $utilisateur->setMdp(md5("prof1"));
+                $utilisateur->setRoles(array ('ROLE_PROF'));
+                $manager->persist($utilisateur);
+            }elseif ($i== 1){
+                $utilisateur->setEmail("parent1@mail.test");
+                $utilisateur->setNom("Yvana");
+                $utilisateur->setPrenom("Nawel");
+                $utilisateur->setMdp(md5("parent1"));
+                $utilisateur->setRoles(array ('ROLE_PARENT'));
+                $manager->persist($utilisateur);
+            }else{
+                $utilisateur->setEmail($faker->email);
+                $utilisateur->setNom($faker->lastName);
+                $utilisateur->setPrenom($faker->firstName);
+                $utilisateur->setMdp(md5($faker->randomElement(array ('prof1','parent1','parent2','prof2'),1)));
+                $utilisateur->setRoles($faker->randomElements(array ('ROLE_PROF','ROLE_PARENT'), 1));
+                $manager->persist($utilisateur);
+            }
 
             if (in_array("ROLE_PROF",$utilisateur->getRoles())){
                 $prof = new Professeur();
@@ -52,6 +71,10 @@ class UtilisateurFixtures extends Fixture
         $this->loadPromotion($this->professeur,$manager);
         $this->loadEleve($this->parents, $this->promotions,$manager);
 
+        $server = new ServerSetting();
+        $server->setName('videoServer');
+        $server->setValue('https://mydemoapps.azurewebsites.net/');
+        $manager->persist($server);
         $manager->flush();
     }
 
